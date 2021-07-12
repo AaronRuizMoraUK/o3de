@@ -39,6 +39,7 @@
         "Gems/GraphCanvas",
         "Gems/GraphModel",
         "Gems/HttpRequestor",
+        "Gems/HMDFramework",
         "Gems/ImGui",
         "Gems/InAppPurchases",
         "Gems/LandscapeCanvas",
