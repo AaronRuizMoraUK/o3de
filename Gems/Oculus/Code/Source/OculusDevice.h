@@ -9,7 +9,7 @@
 
 #include <AzCore/Component/Component.h>
 #include <Oculus/OculusBus.h>
-#include "HMDBus.h"
+#include <HMDBus.h>
 
 #include <OVR_CAPI.h>
 #include <OVR_Version.h>

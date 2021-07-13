@@ -6,6 +6,7 @@
 #
 
 set(FILES
+	Include/VR/VRControllerBus.h
 	Source/HMDLuaComponent.h
 	Source/HMDLuaComponent.cpp
     Source/HMDDebuggerComponent.h

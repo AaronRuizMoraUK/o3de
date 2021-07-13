@@ -6,11 +6,11 @@
  */
 
 #include <HMDBus.h>
-#include <VRControllerBus.h>
+#include <VR/VRControllerBus.h>
 #include <AzCore/Serialization/SerializeContext.h>
 #include <AzCore/RTTI/BehaviorContext.h>
 
-#include "HMDLuaComponent.h"
+#include <HMDLuaComponent.h>
 
 namespace AZ 
 {
@@ -35,7 +35,7 @@ namespace AZ
             if (behaviorContext)
             {
                 behaviorContext->EBus<HMDDeviceRequestBus>("HMDDeviceRequestBus")->
-                    Attribute(AZ::Script::Attributes::ExcludeFrom, AZ::Script::Attributes::ExcludeFlags::Preview)->
+                    //Attribute(AZ::Script::Attributes::ExcludeFrom, AZ::Script::Attributes::ExcludeFlags::Preview)->
                     Event("GetTrackingState", &HMDDeviceRequestBus::Events::GetTrackingState)->
                     Event("RecenterPose", &HMDDeviceRequestBus::Events::RecenterPose)->
                     Event("SetTrackingLevel", &HMDDeviceRequestBus::Events::SetTrackingLevel)->
@@ -45,7 +45,7 @@ namespace AZ
                     Event("GetPlayspace", &HMDDeviceRequestBus::Events::GetPlayspace);
 
                 behaviorContext->EBus<ControllerRequestBus>("ControllerRequestBus")->
-                    Attribute(AZ::Script::Attributes::ExcludeFrom, AZ::Script::Attributes::ExcludeFlags::Preview)->
+                    //Attribute(AZ::Script::Attributes::ExcludeFrom, AZ::Script::Attributes::ExcludeFlags::Preview)->
                     Event("GetTrackingState", &ControllerRequestBus::Events::GetTrackingState)->
                     Event("IsConnected", &ControllerRequestBus::Events::IsConnected);
             }
@@ -70,7 +70,7 @@ namespace AZ
             if (behaviorContext)
             {
                 behaviorContext->Class<TrackingState>()
-                    ->Attribute(AZ::Script::Attributes::ExcludeFrom, AZ::Script::Attributes::ExcludeFlags::Preview)
+                    //->Attribute(AZ::Script::Attributes::ExcludeFrom, AZ::Script::Attributes::ExcludeFlags::Preview)
                     ->Attribute(AZ::Script::Attributes::Storage, AZ::Script::Attributes::StorageType::Value)
                     ->Property("pose", BehaviorValueProperty(&TrackingState::pose))
                     ->Property("dynamics", BehaviorValueProperty(&TrackingState::dynamics))
@@ -94,7 +94,7 @@ namespace AZ
             if (behaviorContext)
             {
                 behaviorContext->Class<PoseState>()
-                    ->Attribute(AZ::Script::Attributes::ExcludeFrom, AZ::Script::Attributes::ExcludeFlags::Preview)
+                    //->Attribute(AZ::Script::Attributes::ExcludeFrom, AZ::Script::Attributes::ExcludeFlags::Preview)
                     ->Attribute(AZ::Script::Attributes::Storage, AZ::Script::Attributes::StorageType::Value)
                     ->Property("orientation", BehaviorValueProperty(&PoseState::orientation))
                     ->Property("position", BehaviorValueProperty(&PoseState::position))
@@ -120,7 +120,7 @@ namespace AZ
             if (behaviorContext)
             {
                 behaviorContext->Class<DynamicsState>()
-                    ->Attribute(AZ::Script::Attributes::ExcludeFrom, AZ::Script::Attributes::ExcludeFlags::Preview)
+                    //->Attribute(AZ::Script::Attributes::ExcludeFrom, AZ::Script::Attributes::ExcludeFlags::Preview)
                     ->Attribute(AZ::Script::Attributes::Storage, AZ::Script::Attributes::StorageType::Value)
                     ->Property("angularVelocity", BehaviorValueProperty(&DynamicsState::angularVelocity))
                     ->Property("angularAcceleration", BehaviorValueProperty(&DynamicsState::angularAcceleration))
@@ -150,7 +150,7 @@ namespace AZ
             if (behaviorContext)
             {
                 behaviorContext->Class<HMDDeviceInfo>()
-                    ->Attribute(AZ::Script::Attributes::ExcludeFrom, AZ::Script::Attributes::ExcludeFlags::Preview)
+                    //->Attribute(AZ::Script::Attributes::ExcludeFrom, AZ::Script::Attributes::ExcludeFlags::Preview)
                     ->Attribute(AZ::Script::Attributes::Storage, AZ::Script::Attributes::StorageType::Value)
                     ->Property("productName", BehaviorValueProperty(&HMDDeviceInfo::productName))
                     ->Property("manufacturer", BehaviorValueProperty(&HMDDeviceInfo::manufacturer))
@@ -178,7 +178,7 @@ namespace AZ
             if (behaviorContext)
             {
                 behaviorContext->Class<Playspace>()
-                    ->Attribute(AZ::Script::Attributes::ExcludeFrom, AZ::Script::Attributes::ExcludeFlags::Preview)
+                    //->Attribute(AZ::Script::Attributes::ExcludeFrom, AZ::Script::Attributes::ExcludeFlags::Preview)
                     ->Attribute(AZ::Script::Attributes::Storage, AZ::Script::Attributes::StorageType::Value)
                     ->Property("isValid", BehaviorValueProperty(&Playspace::isValid))
                     ->Property("corners", BehaviorValueProperty(&Playspace::corners))

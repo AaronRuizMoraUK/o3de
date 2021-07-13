@@ -6,6 +6,7 @@
 #
 
 set(FILES
+	Include/Oculus/OculusBus.h
 	Source/OculusDevice.h
 	Source/OculusDevice.cpp
 	Source/OculusTouchController.h

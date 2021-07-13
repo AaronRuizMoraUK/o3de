@@ -8,7 +8,7 @@
 #pragma once
 
 #include <AzToolsFramework/ToolsComponents/EditorComponentBase.h>
-#include <AzToolsFramework/Entity/EditorEntityContextBus.h>
+//#include <AzToolsFramework/Entity/EditorEntityContextBus.h>
 
 namespace AZ
 {
@@ -19,7 +19,7 @@ namespace AZ
         */
         class EditorVRPreviewComponent
             : public AzToolsFramework::Components::EditorComponentBase
-            , public AzToolsFramework::EditorEntityContextNotificationBus::Handler
+            //, public AzToolsFramework::EditorEntityContextNotificationBus::Handler
         {
         public:
             AZ_EDITOR_COMPONENT(EditorVRPreviewComponent, "{02C83699-3C4F-40A3-B135-F7BDD394D830}", AzToolsFramework::Components::EditorComponentBase);
@@ -40,7 +40,7 @@ namespace AZ
 
             //////////////////////////////////////////////////////////////////////////
             // AzToolsFramework::EditorEntityContextNotificationBus interface implementation
-            void OnSliceInstantiated(const Data::AssetId& sliceAssetId, SliceComponent::SliceInstanceAddress& sliceAddress, const AzFramework::SliceInstantiationTicket& ticket) override;
+            //void OnSliceInstantiated(const Data::AssetId& sliceAssetId, SliceComponent::SliceInstanceAddress& sliceAddress, const AzFramework::SliceInstantiationTicket& ticket) override;
             //////////////////////////////////////////////////////////////////////////
 
             /// Helper to generate the Editor navigation area

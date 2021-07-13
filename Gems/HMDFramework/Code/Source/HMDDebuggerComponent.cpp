@@ -5,14 +5,12 @@
  *
  */
 
-#include "HMDDebuggerComponent.h"
 #include <AzCore/Serialization/SerializeContext.h>
 #include <AzCore/Serialization/EditContext.h>
 
+
 // For debug rendering
 #include <IViewSystem.h>
-#include <IGame.h>
-#include <IGameFramework.h>
 #include <IRenderAuxGeom.h>
 #include <MathConversion.h>
 
@@ -20,6 +18,8 @@
 #include <AzCore/Component/TransformBus.h>
 #include <AzFramework/Input/Devices/Keyboard/InputDeviceKeyboard.h>
 #include <AzFramework/Input/Devices/Mouse/InputDeviceMouse.h>
+
+#include <HMDDebuggerComponent.h>
 
 // debug constants
 static const float kDebugCameraMoveSpeed = 5.0f;
@@ -154,7 +154,7 @@ void DrawHMDController(AZ::VR::ControllerIndex id, const SViewParams* viewParame
     }
 }
 
-void HMDDebuggerComponent::UpdateDebugInfo(float deltaTime)
+void HMDDebuggerComponent::UpdateDebugInfo([[maybe_unused]] float deltaTime)
 {
     if (IViewSystem* viewSystem = gEnv->pSystem->GetIViewSystem())
     {
@@ -191,8 +191,8 @@ void HMDDebuggerComponent::UpdateDebugCamera(float deltaTime)
             AZ::Transform cameraTM;
             EBUS_EVENT_ID_RESULT(cameraTM, entityId, AZ::TransformBus, GetWorldTM);
 
-            const AZ::Vector3 cameraPosition = cameraTM.GetPosition();
-            cameraTM.SetPosition(AZ::Vector3::CreateZero()); // zero out position before rotation calculations
+            const AZ::Vector3 cameraPosition = cameraTM.GetTranslation();
+            cameraTM.SetTranslation(AZ::Vector3::CreateZero()); // zero out position before rotation calculations
 
             // create the move vector from our right, left, forward, back key states
             AZ::Vector3 moveVec = AZ::Vector3::CreateZero();
@@ -212,9 +212,9 @@ void HMDDebuggerComponent::UpdateDebugCamera(float deltaTime)
 
                 if (trackingState)
                 {
-                    HMDTM.SetRotationPartFromQuaternion(trackingState->pose.orientation);
-                    cameraTM.SetRotationPartFromQuaternion(AZ::Quaternion::CreateZero());
-                    cameraTM.SetPosition(cameraPosition + (HMDTM * moveVec));
+                    HMDTM.SetRotation(trackingState->pose.orientation);
+                    cameraTM.SetRotation(AZ::Quaternion::CreateZero());
+                    cameraTM.SetTranslation(cameraPosition + (HMDTM.TransformVector(moveVec)));
                 }
             }
             else
@@ -227,8 +227,8 @@ void HMDDebuggerComponent::UpdateDebugCamera(float deltaTime)
                 AZ::Quaternion rotationZ = AZ::Quaternion::CreateRotationZ(m_debugCameraRotation.GetZ()*kDebugCameraRotateScale);
                 AZ::Quaternion rotationXYZ = rotationY * rotationZ * rotationX;
 
-                cameraTM.SetRotationPartFromQuaternion(rotationXYZ);
-                cameraTM.SetPosition(cameraPosition + (cameraTM * moveVec));
+                cameraTM.SetRotation(rotationXYZ);
+                cameraTM.SetTranslation(cameraPosition + (cameraTM.TransformVector(moveVec)));
             }
 
             EBUS_EVENT_ID(entityId, AZ::TransformBus, SetWorldTM, cameraTM);
@@ -236,7 +236,7 @@ void HMDDebuggerComponent::UpdateDebugCamera(float deltaTime)
     }
 }
 
-void HMDDebuggerComponent::OnTick(float deltaTime, AZ::ScriptTimePoint time)
+void HMDDebuggerComponent::OnTick(float deltaTime, [[maybe_unused]] AZ::ScriptTimePoint time)
 {
     if (m_debugFlags.test(EHMDDebugFlags::Info))
     {

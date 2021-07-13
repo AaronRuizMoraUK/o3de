@@ -5,11 +5,11 @@
  *
  */
 
-#include "OculusTouchController.h"
+#include <OculusTouchController.h>
 
 #include <AzFramework/Input/Utils/AdjustAnalogInputForDeadZone.h>
 
-#include <IInput.h> // Temp until deprecated
+//#include <IInput.h> // Temp until deprecated
 
 namespace Oculus
 {
@@ -156,14 +156,14 @@ namespace Oculus
             m_thumbStickAxis2DChannelsById[channelId] = channel;
         }
 
-        CrySystemEventBus::Handler::BusConnect();
+        //CrySystemEventBus::Handler::BusConnect();
         InputHapticFeedbackRequestBus::Handler::BusConnect(GetInputDeviceId());
     }
 
     OculusTouchController::~OculusTouchController()
     {
         InputHapticFeedbackRequestBus::Handler::BusDisconnect(GetInputDeviceId());
-        CrySystemEventBus::Handler::BusDisconnect();
+        //CrySystemEventBus::Handler::BusDisconnect();
 
         // Destroy all thumb-stick axis 2D input channels
         for (const auto& channelById : m_thumbStickAxis2DChannelsById)
@@ -314,6 +314,7 @@ namespace Oculus
         return false;
     }
 
+    /*
     void OculusTouchController::OnCrySystemInitialized(ISystem& system, const SSystemInitParams&)
     {
         if (!system.GetIInput())
@@ -325,7 +326,7 @@ namespace Oculus
         // but it matches the current implementation of the MapSymbol function below.
         static const EKeyId motionBaseKeyId = static_cast<EKeyId>(KI_MOTION_BASE);
 
-        static const std::vector<SInputSymbol> azToCryInputSymbols =
+        static const AZStd::vector<SInputSymbol> azToCryInputSymbols =
         {
             SInputSymbol(Button::A.GetNameCrc32(), motionBaseKeyId, "OculusTouch_A", SInputSymbol::Button),
             SInputSymbol(Button::B.GetNameCrc32(), motionBaseKeyId, "OculusTouch_B", SInputSymbol::Button),
@@ -350,6 +351,7 @@ namespace Oculus
                                                  azToCryInputSymbols,
                                                  GetInputDeviceId());
     }
+    */
 
     void OculusTouchController::ConnectToControllerBus() 
     {

@@ -7,8 +7,8 @@
 
 #pragma once
 
-#include <VRControllerBus.h>
-#include <CrySystemBus.h>
+#include <VR/VRControllerBus.h>
+//#include <CrySystemBus.h>
 
 #include <AzFramework/Input/Buses/Requests/InputHapticFeedbackRequestBus.h>
 #include <AzFramework/Input/Channels/InputChannelAnalog.h>
@@ -27,7 +27,7 @@ class OculusTouchController
     : public AZ::VR::ControllerRequestBus::Handler
     , public AzFramework::InputDevice
     , public AzFramework::InputHapticFeedbackRequestBus::Handler
-    , protected CrySystemEventBus::Handler
+    //, protected CrySystemEventBus::Handler
 {
     public:
 
@@ -52,7 +52,7 @@ class OculusTouchController
         ////////////////////////////////////////////////////////////////////////////
 
         // CrySystemEventBus ///////////////////////////////////////////////////////
-        void OnCrySystemInitialized(ISystem& system, const SSystemInitParams&) override;
+        //void OnCrySystemInitialized(ISystem& system, const SSystemInitParams&) override;
         ////////////////////////////////////////////////////////////////////////////
 
         void ConnectToControllerBus();

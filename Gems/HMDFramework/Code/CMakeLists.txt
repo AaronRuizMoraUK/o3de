@@ -21,10 +21,13 @@ ly_add_target(
         hmdframework_files.cmake
     INCLUDE_DIRECTORIES
         PRIVATE
+            Include
             Source
     BUILD_DEPENDENCIES
         PUBLIC
             AZ::AzCore
+            AZ::AzFramework
+            Legacy::CryCommon
 )
 
 ly_add_target(
@@ -33,9 +36,14 @@ ly_add_target(
     FILES_CMAKE
         hmdframework_shared_files.cmake
     INCLUDE_DIRECTORIES
+        PUBLIC
+            Include
         PRIVATE
             Source
     BUILD_DEPENDENCIES
+        PUBLIC
+            AZ::AzCore
+            Legacy::CryCommon
         PRIVATE
             Gem::HMDFramework.Static
 )
@@ -53,12 +61,14 @@ if(PAL_TRAIT_BUILD_HOST_TOOLS)
             hmdframework_editor_files.cmake
         INCLUDE_DIRECTORIES
             PRIVATE
+                Include
                 Source
         COMPILE_DEFINITIONS
             PRIVATE
                 VR_EDITOR
         BUILD_DEPENDENCIES
             PUBLIC
+                AZ::AzToolsFramework
                 Gem::HMDFramework.Static
     )
 
@@ -69,6 +79,7 @@ if(PAL_TRAIT_BUILD_HOST_TOOLS)
             hmdframework_editor_shared_files.cmake
         INCLUDE_DIRECTORIES
             PRIVATE
+                Include
                 Source
         COMPILE_DEFINITIONS
             PRIVATE

@@ -49,7 +49,7 @@ namespace AZ
             EditorComponentBase::Init();
 
             // connect here for slice created callbacks
-            AzToolsFramework::EditorEntityContextNotificationBus::Handler::BusConnect();
+            //AzToolsFramework::EditorEntityContextNotificationBus::Handler::BusConnect();
         }
 
         void EditorVRPreviewComponent::Activate()
@@ -67,13 +67,13 @@ namespace AZ
         void EditorVRPreviewComponent::Deactivate()
         {
             EditorComponentBase::Deactivate();
-            AzToolsFramework::EditorEntityContextNotificationBus::Handler::BusDisconnect();
+            //AzToolsFramework::EditorEntityContextNotificationBus::Handler::BusDisconnect();
         }
         //////////////////////////////////////////////////////////////////////////
 
         //////////////////////////////////////////////////////////////////////////
         // AzToolsFramework::EditorEntityContextNotificationBus interface implementation
-        void EditorVRPreviewComponent::OnSliceInstantiated(const Data::AssetId& sliceAssetId, SliceComponent::SliceInstanceAddress& sliceAddress, const AzFramework::SliceInstantiationTicket& ticket)
+        /*void EditorVRPreviewComponent::OnSliceInstantiated(const Data::AssetId& sliceAssetId, SliceComponent::SliceInstanceAddress& sliceAddress, const AzFramework::SliceInstantiationTicket& ticket)
         {
             const SliceComponent::EntityList& entities = sliceAddress.GetInstance()->GetInstantiated()->m_entities;
             const EntityId entityId = m_entity->GetId();
@@ -90,11 +90,12 @@ namespace AZ
 
             // whether or not we were the ones just instantiated, stop listening
             AzToolsFramework::EditorEntityContextNotificationBus::Handler::BusDisconnect();
-        }
+        }*/
         //////////////////////////////////////////////////////////////////////////
 
         void EditorVRPreviewComponent::GenerateEditorNavigationArea()
         {
+            /*
             const Entity* entity = GetEntity();
             AZ_Assert(entity, "Entity pointer invalid during EditorVRPreviewComponent::Init()!");
 
@@ -102,7 +103,7 @@ namespace AZ
             EBUS_EVENT_ID_RESULT(worldTM, GetEntityId(), TransformBus, GetWorldTM);
 
             const Vector3 halfBounds = m_bounds * 0.5f;
-            const Vector3 position = worldTM.GetPosition() - Vector3(0,0,halfBounds.GetZ());
+            const Vector3 position = worldTM.GetTranslation() - Vector3(0,0,halfBounds.GetZ());
             
 
             // Construct a volume from the position of the Entity Transform and the desired Bounds
@@ -121,6 +122,7 @@ namespace AZ
                 vertices,
                 NUM_VOLUME_VERTS,
                 m_bounds.GetZ());
+            */
         }
     } // namespace VR
 } // namespace AZ

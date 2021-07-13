@@ -16,12 +16,11 @@
 #include <AzCore/Component/Component.h>
 #include <AzCore/std/containers/vector.h>
 #include <HMDBus.h>
-#include <VRControllerBus.h>
+#include <VR/VRControllerBus.h>
 #include <AzCore/Component/TickBus.h>
 #include <AzCore/std/containers/bitset.h>
 
 // for input
-#include <InputNotificationBus.h>
 #include <AzFramework/Input/Events/InputChannelEventListener.h>
 
 class HMDDebuggerComponent

@@ -5,8 +5,6 @@
  *
  */
 
-#include "OculusDevice.h"
-#include "OculusTouchController.h"
 #include <AzCore/Serialization/SerializeContext.h>
 #include <AzCore/Serialization/EditContext.h>
 #include <AzCore/Math/Matrix3x3.h>
@@ -14,18 +12,20 @@
 #include <AzCore/Math/MathUtils.h>
 #include <MathConversion.h>
 #include <IRenderAuxGeom.h>
-#include <Oculus_Traits_Platform.h>
 
+// -------------------------------
 #define OVR_D3D_VERSION 11
 #include <d3d11.h>
 #include <OVR_CAPI_D3D.h>
 
-#define LogMessage(...) CryLogAlways("[HMD][Oculus] - " __VA_ARGS__);
-
-#if AZ_TRAIT_OCULUS_OCULUS_SUPPORTED
 #undef min
 #undef max
-#endif
+// -------------------------------
+
+#define LogMessage(...) AZ_TracePrintf("[HMD][Oculus]", __VA_ARGS__);
+
+#include <OculusDevice.h>
+#include <OculusTouchController.h>
 
 namespace Oculus
 {
@@ -70,8 +70,8 @@ void CopyPose(const ovrPoseStatef& src, AZ::VR::PoseState& poseDest, AZ::VR::Dyn
     // Oculus devices return angular velocity and acceleration in world space. The engine promises these
     // in local space, which is the more intuitive way to use them. Multiplying by the orientation gets
     // these values in local space.
-    dynamicsDest.angularVelocity = poseDest.orientation * OculusVec3ToAZVec3(src.AngularVelocity);
-    dynamicsDest.angularAcceleration = poseDest.orientation * OculusVec3ToAZVec3(src.AngularAcceleration);
+    dynamicsDest.angularVelocity = poseDest.orientation.TransformVector(OculusVec3ToAZVec3(src.AngularVelocity));
+    dynamicsDest.angularAcceleration = poseDest.orientation.TransformVector(OculusVec3ToAZVec3(src.AngularAcceleration));
 
     // With regard to the note about angular velocity and acceleration, linear velocity and acceleration are fine in world space
     dynamicsDest.linearVelocity = OculusVec3ToAZVec3(src.LinearVelocity);
@@ -390,7 +390,7 @@ void OculusDevice::RecenterPose()
 
 void OculusDevice::SetTrackingLevel(const AZ::VR::HMDTrackingLevel level)
 {
-    ovrResult result;
+    ovrResult result = ovrError_InvalidParameter;
 
     switch (level)
     {
@@ -488,14 +488,14 @@ void OculusDevice::DrawDebugInfo(const AZ::Transform& transform, IRenderAuxGeom*
             const Vec3 planeTriangles[] =
             {
                 // Triangle 1
-                AZVec3ToLYVec3(transform * (space->corners[0] + offset)),
-                AZVec3ToLYVec3(transform * (space->corners[1] + offset)),
-                AZVec3ToLYVec3(transform * (space->corners[2] + offset)),
+                AZVec3ToLYVec3(transform.TransformPoint((space->corners[0] + offset))),
+                AZVec3ToLYVec3(transform.TransformPoint((space->corners[1] + offset))),
+                AZVec3ToLYVec3(transform.TransformPoint((space->corners[2] + offset))),
 
                 // Triangle 2
-                AZVec3ToLYVec3(transform * (space->corners[3] + offset)),
-                AZVec3ToLYVec3(transform * (space->corners[0] + offset)),
-                AZVec3ToLYVec3(transform * (space->corners[2] + offset))
+                AZVec3ToLYVec3(transform.TransformPoint((space->corners[3] + offset))),
+                AZVec3ToLYVec3(transform.TransformPoint((space->corners[0] + offset))),
+                AZVec3ToLYVec3(transform.TransformPoint((space->corners[2] + offset)))
             };
 
             SAuxGeomRenderFlags flags = auxGeom->GetRenderFlags();

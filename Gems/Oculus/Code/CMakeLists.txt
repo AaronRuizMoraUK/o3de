@@ -26,6 +26,9 @@ ly_add_target(
     BUILD_DEPENDENCIES
         PUBLIC
             AZ::AzCore
+            AZ::AzFramework
+            Gem::HMDFramework
+            3rdParty::LibOVR
 )
 
 ly_add_target(
@@ -34,10 +37,13 @@ ly_add_target(
     FILES_CMAKE
         oculus_shared_files.cmake
     INCLUDE_DIRECTORIES
-        PRIVATE
+        PUBLIC
             Include
+        PRIVATE
             Source
     BUILD_DEPENDENCIES
+        PUBLIC
+            AZ::AzCore
         PRIVATE
             Gem::Oculus.Static
 )
