@@ -14,12 +14,14 @@
 #include <IRenderAuxGeom.h>
 
 // -------------------------------
+/*
 #define OVR_D3D_VERSION 11
 #include <d3d11.h>
 #include <OVR_CAPI_D3D.h>
 
 #undef min
 #undef max
+*/
 // -------------------------------
 
 #define LogMessage(...) AZ_TracePrintf("[HMD][Oculus]", __VA_ARGS__);
@@ -254,10 +256,10 @@ void OculusDevice::UpdateInternalState()
 
 }
 
-bool OculusDevice::CreateRenderTargets(void* renderDevice, const TextureDesc& desc, size_t eyeCount, AZ::VR::HMDRenderTarget* renderTargets[])
+bool OculusDevice::CreateRenderTargets([[maybe_unused]] void* renderDevice, [[maybe_unused]] const TextureDesc& desc, [[maybe_unused]] size_t eyeCount, [[maybe_unused]] AZ::VR::HMDRenderTarget* renderTargets[])
 {
     bool success = false;
-
+    /*
     for (size_t i = 0; i < eyeCount; i++)
     {
         ID3D11Device* d3dDevice = static_cast<ID3D11Device*>(renderDevice);
@@ -316,7 +318,7 @@ bool OculusDevice::CreateRenderTargets(void* renderDevice, const TextureDesc& de
             LogMessage("%s [%s]", "Unable to create D3D11 texture swap chain!", *errorInfo.ErrorString ? errorInfo.ErrorString : "unspecified error");
         }
     }
-
+    */
     return success;
 }
 
